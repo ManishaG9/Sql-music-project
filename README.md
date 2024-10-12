@@ -130,4 +130,4 @@ INSERT INTO song VALUES(36,13,'Sgt. Pepper''s Lonely Hearts Club Band (Reprise)'
 INSERT INTO song VALUES(37,13,'A Day in the Life', 5.65);
 
 show tables;
-</pre>
+
