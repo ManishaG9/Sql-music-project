@@ -136,3 +136,115 @@ INSERT INTO song VALUES(37,13,'A Day in the Life', 5.65);
 
 show tables;
 
+
+--- Answers ---
+
+-- question 1 List all artists for each record label sorted by artist name?
+
+select p.name as "artist_name",
+n.name as "record_label_name"
+from artist as p join record_label as n 
+on p.id = n.id;
+
+--  question 2. number of songs per artist in descending order
+
+select c.name as "artist_name", 
+       s.name as "song_name"
+       from artist c join song s
+       on c.id = s.id 
+       order by c.name desc;
+       
+
+ ----- question 3. which artist recorded the most songs?
+ 
+ select c.name as "artist_name",
+		s.duration as "duration"
+        from artist c join song s
+        on c.id = s.id 
+        order by s.duration desc;
+       
+ 
+
+
+----- question 4 which artists have recorded songs longer than 5 minutes?
+
+select c.name as"artist_name",
+	   s.name as "song_name",
+       s.duration as "duration"
+       from artist c join song s
+       where s.duration > 5;
+       
+-- question 5 for each artist and album how many songs were less than 5 minutes long?
+         select c.name as"artist_name",
+	   s.name as "song_name",
+       s.duration as "duration"
+       from artist c join song s
+       where s.duration < 5;
+       
+       
+-----  question 6 in which year or years were the most songs recorded?
+
+select s.name as "song_name",
+       s.duration as "duration",
+       count(y.year) as "year"
+from  song  s join album y
+on s.id = y.id 
+group by y.year
+order by s.duration desc;
+
+    
+---- question 7 list the artist, song and year of the top 5 longest recorded songs
+
+  select n.name as "artist_name",
+	     n.year as "year",
+         s.name as "song_name",
+         s.duration as "duration"
+         from album n join song s
+         on n.id = s.id
+         join artist p
+		on  n.id = p.id 
+        order by s.duration desc
+       limit 5;
+       
+       
+       
+       
+       -- question 8 -- list the artist, song and year of the top 5 longest recorded songs
+
+       select c.name as "artist_name",
+              s.name as  "song_name",
+              s.duration as "duration",
+              y.year as "year"
+	from artist c join song s
+    on c.id = s.id 
+	join album y 
+    on c.id = y.id 
+    order by s.duration desc
+    limit 5;
+       
+
+       
+	
+--- question 9 total duration of all songs recorded by each artist in descending order
+
+select  b.name as "artist_name",
+	    sum(s.duration) as "duration"
+       from song s join album c
+       on s.id = c.id
+       join artist b
+       on s.id = b.id
+	   group by b.name
+       order by sum(s.duration) desc;
+       
+         
+--- question 10  for which artist and album are there no songs less than 5 minutes long?
+
+select c.name as "artist_name",
+       b.name as "album_name",
+       s.name as "song_name",
+       s.duration as "duration"
+       from artist c left join album b 
+       on c.id = b.id
+		left join song s 
+       on s.id = b.id and s.duration <5
+       where s.name is  null;
