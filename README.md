@@ -196,13 +196,13 @@ order by s.duration desc;
 ---- question 7 list the artist, song and year of the top 5 longest recorded songs
 
   select n.name as "artist_name",
-	     n.year as "year",
+	 n.year as "year",
          s.name as "song_name",
          s.duration as "duration"
          from album n join song s
          on n.id = s.id
          join artist p
-		on  n.id = p.id 
+	 on  n.id = p.id 
         order by s.duration desc
        limit 5;
        
